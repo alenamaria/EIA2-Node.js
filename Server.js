@@ -22,12 +22,12 @@ var Server;
     // Server beibringen auf etwas zu h�ren
     server.listen(port);
     function handleListen() {
-        console.log("Ich h�re?");
+        console.log("Ich höre?");
         // Ausgabe auf der Konsole bzw. im Terminal
     }
     function handleRequest(_request, _response) {
         // handleRequest hat automatisch zwei Parameter, ohne R�ckgabewert
-        console.log("Ich h�re Stimmen!");
+        console.log("Ich höre Stimmen!");
         // Ausgabe in der Konsole bzw. im Terminal
         // Server h�rt, wenn localhost:8100 im Browser ge�ffnet ist;
         // dann erscheint im Terminal "Ich h�re Stimmen"
@@ -42,7 +42,7 @@ var Server;
         // weil angenommen wird, es handle sich um ein html-Dokument
         _response.setHeader("Access-Control-Allow-Origin", "*");
         // f�r alle zug�nglich gemacht
-        _response.write("Ich habe dich geh�rt<br/>");
+        _response.write("Ich habe dich gehört<br/>");
         // Text erscheint auch im Browserfenster
         for (let key in query)
             // key als Schl�ssel

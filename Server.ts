@@ -30,13 +30,13 @@ namespace Server {
     server.listen(port);
 
     function handleListen(): void {
-        console.log("Ich höre?");
+        console.log("Ich hÃ¶re?");
         // Ausgabe auf der Konsole bzw. im Terminal
     }
 
     function handleRequest(_request: Http.IncomingMessage, _response: Http.ServerResponse): void {
     // handleRequest hat automatisch zwei Parameter, ohne Rückgabewert
-        console.log("Ich höre Stimmen!");
+        console.log("Ich hÃ¶re Stimmen!");
         // Ausgabe in der Konsole bzw. im Terminal
         // Server hört, wenn localhost:8100 im Browser geöffnet ist;
         // dann erscheint im Terminal "Ich höre Stimmen"
@@ -53,7 +53,7 @@ namespace Server {
         // weil angenommen wird, es handle sich um ein html-Dokument
         _response.setHeader("Access-Control-Allow-Origin", "*");
         // für alle zugänglich gemacht
-        _response.write("Ich habe dich gehört<br/>");
+        _response.write("Ich habe dich gehÃ¶rt<br/>");
         // Text erscheint auch im Browserfenster
         
         for (let key in query)
