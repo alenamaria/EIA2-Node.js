@@ -37,9 +37,6 @@ var Server;
         // definieren von a als Variable
         let b = parseInt(query["b"]);
         // definieren von b als Variable
-        for (let key in query)
-            // key als Schl�ssel
-            console.log(query[key]);
         _response.setHeader("content-type", "text/html; charset=utf-8");
         // um das Umlautproblem im Browser zu l�sen, �ndert aber auch die Schriftart, 
         // weil angenommen wird, es handle sich um ein html-Dokument
@@ -47,6 +44,10 @@ var Server;
         // f�r alle zug�nglich gemacht
         _response.write("Ich habe dich geh�rt<br/>");
         // Text erscheint auch im Browserfenster
+        for (let key in query)
+            // key als Schl�ssel
+            // console.log(query[key]);
+            _response.write("eingegebene Query-Informationen: " + (query[key]) + "<br>");
         _response.write("Das Ergebnis ist: " + (a + b));
         // "Das Ergebnis ist: " und die L�sung der Rechnung erscheinen im Browserfenster
         _response.end();

@@ -47,11 +47,7 @@ namespace Server {
         // definieren von a als Variable
         let b: number = parseInt(query["b"]);
         // definieren von b als Variable
-
-        for (let key in query) 
-        // key als Schlüssel
-            console.log(query[key]);
-
+        
         _response.setHeader("content-type", "text/html; charset=utf-8");
         // um das Umlautproblem im Browser zu lösen, ändert aber auch die Schriftart, 
         // weil angenommen wird, es handle sich um ein html-Dokument
@@ -59,6 +55,12 @@ namespace Server {
         // für alle zugänglich gemacht
         _response.write("Ich habe dich gehört<br/>");
         // Text erscheint auch im Browserfenster
+        
+        for (let key in query)
+        // key als Schlüssel
+        // console.log(query[key]);
+            
+        _response.write("eingegebene Query-Informationen: " + (query[key]) + "<br>");
         _response.write("Das Ergebnis ist: " + (a + b));
         // "Das Ergebnis ist: " und die Lösung der Rechnung erscheinen im Browserfenster
 
