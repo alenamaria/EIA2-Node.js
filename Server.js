@@ -11,7 +11,7 @@ var Server;
     let port = process.env.PORT;
     // Globale Variable - representiert den Systemumgebungs-Status der Applikation, wenn sie startet
     if (port == undefined)
-        // wenn der Port undefined ist, dann:
+        // wenn der Port undefined ist, dann:  
         port = 8100;
     // soll port 8100 sein
     let server = Http.createServer();
@@ -40,11 +40,11 @@ var Server;
         for (let key in query)
             // key als Schl�ssel
             console.log(query[key]);
-        // Ausgabe auf der Konsole bzw. im Terminal
         _response.setHeader("content-type", "text/html; charset=utf-8");
         // um das Umlautproblem im Browser zu l�sen, �ndert aber auch die Schriftart, 
         // weil angenommen wird, es handle sich um ein html-Dokument
         _response.setHeader("Access-Control-Allow-Origin", "*");
+        // f�r alle zug�nglich gemacht
         _response.write("Ich habe dich geh�rt<br/>");
         // Text erscheint auch im Browserfenster
         _response.write("Das Ergebnis ist: " + (a + b));

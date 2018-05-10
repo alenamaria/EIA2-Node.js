@@ -9,6 +9,7 @@ import * as Url from "url";
 
 namespace Server {
     interface AssocStringString {
+        // homogenes assoziatives Array, bei dem Daten vom Typ string dem "key" zugeordnet wird
         // Interface: Assoziatives Array mit key als Schlüssel
         [key: string]: string;
     }
@@ -16,10 +17,10 @@ namespace Server {
     let port: number = process.env.PORT;
     // Globale Variable - representiert den Systemumgebungs-Status der Applikation, wenn sie startet
     if (port == undefined)
-    // wenn der Port undefined ist, dann:
+    // wenn der Port undefined ist, dann:  
         port = 8100;
         // soll port 8100 sein
-
+    
     let server: Http.Server = Http.createServer();
     // erzeugt Server-Objekt, mit dem weiter gearbeitet werden kann
     server.addListener("listening", handleListen);
@@ -50,13 +51,12 @@ namespace Server {
         for (let key in query) 
         // key als Schlüssel
             console.log(query[key]);
-            // Ausgabe auf der Konsole bzw. im Terminal
 
         _response.setHeader("content-type", "text/html; charset=utf-8");
         // um das Umlautproblem im Browser zu lösen, ändert aber auch die Schriftart, 
         // weil angenommen wird, es handle sich um ein html-Dokument
         _response.setHeader("Access-Control-Allow-Origin", "*");
-
+        // für alle zugänglich gemacht
         _response.write("Ich habe dich gehört<br/>");
         // Text erscheint auch im Browserfenster
         _response.write("Das Ergebnis ist: " + (a + b));
