@@ -8,6 +8,13 @@ Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe.
 Er wurde nicht kopiert und auch nicht diktiert.
 */
 
+/******************************************
+Server.ts wird auf Heroku irgendwie nicht aktualisiert, auch wenn ich einen Manual Deploy mache, 
+sodass die Daten aus diesem TypeScript-Dokument nicht mit den anderen Dateien von Aufgabe 6 verknüpft werden. 
+In der Konsole wird beim Öffnen der Heroku-App folgendes angezeigt:
+"Fehler beim Laden der folgenden Adresse: Could not load the source for https://eia2-node-alenamaria.herokuapp.com/."
+******************************************/
+
 import * as Http from "http";
 // Bindet das HTTP Modul ein
 import * as Url from "url";
@@ -35,7 +42,7 @@ namespace Server {
     }
     
     let studiHomoAssoc: Studis = {};
-    let studis: Studis = {};
+    // let studis: Studis = {};
 
     let port: number = process.env.PORT;
     // Globale Variable - representiert den Systemumgebungs-Status der Applikation, wenn sie startet
@@ -46,7 +53,7 @@ namespace Server {
     
     let server: Http.Server = Http.createServer((_request: Http.IncomingMessage, _response: Http.ServerResponse) => {
         _response.setHeader("content-type", "text/html; charset=utf-8");
-        _response.setHeader("Acces-Control-Allow-Origin", "*");
+        _response.setHeader("Access-Control-Allow-Origin", "*");
     });
     // erzeugt Server-Objekt, mit dem weiter gearbeitet werden kann
     

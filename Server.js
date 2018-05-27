@@ -8,6 +8,12 @@ Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe.
 Er wurde nicht kopiert und auch nicht diktiert.
 */
 "use strict";
+/******************************************
+Server.ts wird auf Heroku irgendwie nicht aktualisiert, auch wenn ich einen Manual Deploy mache,
+sodass die Daten aus diesem TypeScript-Dokument nicht mit den anderen Dateien von Aufgabe 6 verkn�pft werden.
+In der Konsole wird beim �ffnen der Heroku-App folgendes angezeigt:
+"Fehler beim Laden der folgenden Adresse: Could not load the source for https://eia2-node-alenamaria.herokuapp.com/."
+******************************************/
 const Http = require("http");
 // Bindet das HTTP Modul ein
 const Url = require("url");
@@ -15,7 +21,7 @@ const Url = require("url");
 var Server;
 (function (Server) {
     let studiHomoAssoc = {};
-    let studis = {};
+    // let studis: Studis = {};
     let port = process.env.PORT;
     // Globale Variable - representiert den Systemumgebungs-Status der Applikation, wenn sie startet
     if (port == undefined)
@@ -24,7 +30,7 @@ var Server;
     // soll port 8100 sein
     let server = Http.createServer((_request, _response) => {
         _response.setHeader("content-type", "text/html; charset=utf-8");
-        _response.setHeader("Acces-Control-Allow-Origin", "*");
+        _response.setHeader("Access-Control-Allow-Origin", "*");
     });
     // erzeugt Server-Objekt, mit dem weiter gearbeitet werden kann
     server.addListener("request", handleRequest);
