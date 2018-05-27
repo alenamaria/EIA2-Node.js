@@ -1,10 +1,19 @@
+/*
+Aufgabe: Aufgabe 6
+Name: Alena Hurst
+Matrikel: 257742
+Datum: 27.05.18
+    
+Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe.
+Er wurde nicht kopiert und auch nicht diktiert.
+*/
 "use strict";
 const Http = require("http");
 // Bindet das HTTP Modul ein
 const Url = require("url");
 // Bindet URL Modul ein
-var Aufgabe6;
-(function (Aufgabe6) {
+var Server;
+(function (Server) {
     let studiHomoAssoc = {};
     let studis = {};
     let port = process.env.PORT;
@@ -28,6 +37,7 @@ var Aufgabe6;
         console.log(query["order"]);
         if (query["order"]) {
             switch (query["order"]) {
+                // Switch Statement: query["order"] wird mit den Werten aus den einzelnen cases verglichen
                 case "insert":
                     insert(query, _response);
                     break;
@@ -43,13 +53,14 @@ var Aufgabe6;
         _response.end();
     }
     function insert(query, _response) {
-        let obj = JSON.parse(query["data"]);
-        let _name = obj.name;
-        let _firstname = obj.firstname;
-        let matrikel = obj.matrikel.toString();
-        let _age = obj.age;
-        let _gender = obj.gender;
-        let _studyPath = obj.studyPath;
+        let object = JSON.parse(query["data"]);
+        // durch JSON.parse wird JSON in JavaScript geparst
+        let _name = object.name;
+        let _firstname = object.firstname;
+        let matrikel = object.matrikel.toString();
+        let _age = object.age;
+        let _gender = object.gender;
+        let _studyPath = object.studyPath;
         let studi;
         studi = {
             name: _name,
@@ -60,14 +71,16 @@ var Aufgabe6;
             studyPath: _studyPath
         };
         studiHomoAssoc[matrikel] = studi;
+        // Datensatz im assoziativen Array unter der Matrikelnummer speichern
         _response.write("Daten empfangen");
     }
     function refresh(_response) {
         console.log(studiHomoAssoc);
         for (let matrikel in studiHomoAssoc) {
+            // for-in-Schleife iteriert �ber die Schl�ssel des assoziativen Arrays
             let studi = studiHomoAssoc[matrikel];
             let line = matrikel + ": ";
-            line += studi.studyPath + ", " + studi.name + ", " + studi.firstname + ", " + studi.age + " Jahre ";
+            line += studi.studyPath + ", " + studi.name + ", " + studi.firstname + ", " + studi.age;
             line += studi.gender ? "male" : "female";
             _response.write(line + "\n");
         }
@@ -76,7 +89,7 @@ var Aufgabe6;
         let studi = studiHomoAssoc[query["searchFor"]];
         if (studi) {
             let line = query["searchFor"] + ": ";
-            line += studi.studyPath + ", " + studi.name + ", " + studi.firstname + ", " + studi.age + " Jahre ";
+            line += studi.studyPath + ", " + studi.name + ", " + studi.firstname + ", " + studi.age;
             line += studi.gender ? "male" : "female";
             _response.write(line);
         }
@@ -87,5 +100,5 @@ var Aufgabe6;
     function error() {
         alert("Error");
     }
-})(Aufgabe6 || (Aufgabe6 = {}));
+})(Server || (Server = {}));
 //# sourceMappingURL=Server.js.map

@@ -1,9 +1,19 @@
+/*
+Aufgabe: Aufgabe 6
+Name: Alena Hurst
+Matrikel: 257742
+Datum: 27.05.18
+    
+Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe. 
+Er wurde nicht kopiert und auch nicht diktiert.
+*/
+
 import * as Http from "http";
 // Bindet das HTTP Modul ein
 import * as Url from "url";
 // Bindet URL Modul ein
 
-namespace Aufgabe6 {
+namespace Server {
     
     interface Studi {
         name: string;
@@ -52,6 +62,7 @@ namespace Aufgabe6 {
 
         if (query["order"]) {
             switch (query["order"]) {
+            // Switch Statement: query["order"] wird mit den Werten aus den einzelnen cases verglichen
                 
                 case "insert":
                     insert (query, _response);
@@ -74,16 +85,18 @@ namespace Aufgabe6 {
         
         function insert(query: Object, _response: Http.ServerResponse): void {
             
-            let obj: Studi = JSON.parse(query["data"]);
+            let object: Studi = JSON.parse(query["data"]);
+            // durch JSON.parse wird JSON in JavaScript geparst
             
-            let _name: string = obj.name;
-            let _firstname: string = obj.firstname;  
-            let matrikel: string = obj.matrikel.toString(); 
-            let _age: number = obj.age;
-            let _gender: boolean = obj.gender;
-            let _studyPath: string = obj.studyPath; 
+            let _name: string = object.name;
+            let _firstname: string = object.firstname;  
+            let matrikel: string = object.matrikel.toString(); 
+            let _age: number = object.age;
+            let _gender: boolean = object.gender;
+            let _studyPath: string = object.studyPath; 
              
             let studi: Studi;
+            
             studi = {
                 name: _name,
                 firstname: _firstname,
@@ -94,6 +107,8 @@ namespace Aufgabe6 {
             };  
             
             studiHomoAssoc[matrikel] = studi;
+            // Datensatz im assoziativen Array unter der Matrikelnummer speichern
+            
             _response.write("Daten empfangen");
         }
     
@@ -101,10 +116,11 @@ namespace Aufgabe6 {
             
             console.log(studiHomoAssoc);
             
-            for (let matrikel in studiHomoAssoc) {  
+            for (let matrikel in studiHomoAssoc) {
+            // for-in-Schleife iteriert über die Schlüssel des assoziativen Arrays
             let studi: Studi = studiHomoAssoc[matrikel];
             let line: string = matrikel + ": ";
-            line += studi.studyPath + ", " + studi.name + ", " + studi.firstname + ", " + studi.age + " Jahre ";
+            line += studi.studyPath + ", " + studi.name + ", " + studi.firstname + ", " + studi.age;
             line += studi.gender ? "male" : "female"; 
             _response.write(line + "\n");                                          
             }
@@ -115,7 +131,7 @@ namespace Aufgabe6 {
             let studi: Studi = studiHomoAssoc[query["searchFor"]];
             if (studi) {
                 let line: string = query["searchFor"] + ": ";
-                line += studi.studyPath + ", " + studi.name + ", " + studi.firstname + ", " + studi.age + " Jahre ";
+                line += studi.studyPath + ", " + studi.name + ", " + studi.firstname + ", " + studi.age;
                 line += studi.gender ? "male" : "female";
                 _response.write(line);
             } else {
