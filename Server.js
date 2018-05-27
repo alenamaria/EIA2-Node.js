@@ -3,8 +3,9 @@ const Http = require("http");
 // Bindet das HTTP Modul ein
 const Url = require("url");
 // Bindet URL Modul ein
-var Server;
-(function (Server) {
+var Aufgabe6;
+(function (Aufgabe6) {
+    let studiHomoAssoc = {};
     let studis = {};
     let port = process.env.PORT;
     // Globale Variable - representiert den Systemumgebungs-Status der Applikation, wenn sie startet
@@ -15,7 +16,6 @@ var Server;
     let server = Http.createServer((_request, _response) => {
         _response.setHeader("content-type", "text/html; charset=utf-8");
         _response.setHeader("Acces-Control-Allow-Origin", "*");
-        _response.end();
     });
     // erzeugt Server-Objekt, mit dem weiter gearbeitet werden kann
     server.addListener("request", handleRequest);
@@ -23,37 +23,69 @@ var Server;
     server.listen(port);
     function handleRequest(_request, _response) {
         // handleRequest hat automatisch zwei Parameter, ohne R�ckgabewert
+        console.log("Ich h�re Stimmen!");
         let query = Url.parse(_request.url, true).query;
-        if (query["action"]) {
-            switch (query["action"]) {
+        console.log(query["order"]);
+        if (query["order"]) {
+            switch (query["order"]) {
                 case "insert":
-                    insert();
+                    insert(query, _response);
                     break;
                 case "refresh":
-                    refresh();
+                    refresh(_response);
                     break;
                 case "search":
-                    _response.write("Search");
+                    search(query, _response);
                     break;
                 default: error();
             }
         }
         _response.end();
     }
-    function insert() {
-        console.log("insert");
+    function insert(query, _response) {
+        let obj = JSON.parse(query["data"]);
+        let _name = obj.name;
+        let _firstname = obj.firstname;
+        let matrikel = obj.matrikel.toString();
+        let _age = obj.age;
+        let _gender = obj.gender;
+        let _studyPath = obj.studyPath;
+        let studi;
+        studi = {
+            name: _name,
+            firstname: _firstname,
+            matrikel: parseInt(matrikel),
+            age: _age,
+            gender: _gender,
+            studyPath: _studyPath
+        };
+        studiHomoAssoc[matrikel] = studi;
+        _response.write("Daten empfangen");
     }
-    function refresh() {
-        console.log("refresh");
+    function refresh(_response) {
+        console.log(studiHomoAssoc);
+        for (let matrikel in studiHomoAssoc) {
+            let studi = studiHomoAssoc[matrikel];
+            let line = matrikel + ": ";
+            line += studi.studyPath + ", " + studi.name + ", " + studi.firstname + ", " + studi.age + " Jahre ";
+            line += studi.gender ? "male" : "female";
+            _response.write(line + "\n");
+        }
     }
-    function search(_matrikel, _response) {
-        if (studis[_matrikel])
-            _response.write(studis[_matrikel]);
-        else
-            _response.write("Kein Suchergebnis");
+    function search(query, _response) {
+        let studi = studiHomoAssoc[query["searchFor"]];
+        if (studi) {
+            let line = query["searchFor"] + ": ";
+            line += studi.studyPath + ", " + studi.name + ", " + studi.firstname + ", " + studi.age + " Jahre ";
+            line += studi.gender ? "male" : "female";
+            _response.write(line);
+        }
+        else {
+            _response.write("No search result");
+        }
     }
     function error() {
-        alert("Bitte �berpr�fen Sie Ihre Eingabe nochmals");
+        alert("Error");
     }
-})(Server || (Server = {}));
+})(Aufgabe6 || (Aufgabe6 = {}));
 //# sourceMappingURL=Server.js.map

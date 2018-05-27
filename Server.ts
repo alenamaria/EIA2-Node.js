@@ -3,7 +3,7 @@ import * as Http from "http";
 import * as Url from "url";
 // Bindet URL Modul ein
 
-namespace Server {
+namespace Aufgabe6 {
     
     interface Studi {
         name: string;
@@ -17,13 +17,14 @@ namespace Server {
     interface Studis {
         // homogenes assoziatives Array, bei dem Daten vom Typ string dem "matrikel" zugeordnet wird
         // Interface: Assoziatives Array mit "matrikel" als Schlüssel
-        [matrikel: string]: string;
+        [matrikel: string]: Studi;
     }
     
     interface Object {
-        [key: string]: string
+        [key: string]: string;
     }
     
+    let studiHomoAssoc: Studis = {};
     let studis: Studis = {};
 
     let port: number = process.env.PORT;
@@ -36,7 +37,6 @@ namespace Server {
     let server: Http.Server = Http.createServer((_request: Http.IncomingMessage, _response: Http.ServerResponse) => {
         _response.setHeader("content-type", "text/html; charset=utf-8");
         _response.setHeader("Acces-Control-Allow-Origin", "*");
-        _response.end();
     });
     // erzeugt Server-Objekt, mit dem weiter gearbeitet werden kann
     
@@ -46,21 +46,23 @@ namespace Server {
 
     function handleRequest(_request: Http.IncomingMessage, _response: Http.ServerResponse): void {
     // handleRequest hat automatisch zwei Parameter, ohne Rückgabewert
+        console.log("Ich höre Stimmen!");
         let query: Object = Url.parse(_request.url, true).query;
+        console.log(query["order"]);
 
-        if (query["action"]) {
-            switch (query["action"]) {
+        if (query["order"]) {
+            switch (query["order"]) {
                 
                 case "insert":
-                    insert();
+                    insert (query, _response);
                     break;
                 
                 case "refresh":
-                    refresh();
+                    refresh (_response);
                     break;
                     
                 case "search":
-                    _response.write("Search");
+                    search (query, _response);
                     break;
                     
                 default: error();
@@ -70,22 +72,58 @@ namespace Server {
         _response.end();
         }
         
-        function insert(): void {
-            console.log("insert");
+        function insert(query: Object, _response: Http.ServerResponse): void {
+            
+            let obj: Studi = JSON.parse(query["data"]);
+            
+            let _name: string = obj.name;
+            let _firstname: string = obj.firstname;  
+            let matrikel: string = obj.matrikel.toString(); 
+            let _age: number = obj.age;
+            let _gender: boolean = obj.gender;
+            let _studyPath: string = obj.studyPath; 
+             
+            let studi: Studi;
+            studi = {
+                name: _name,
+                firstname: _firstname,
+                matrikel: parseInt(matrikel),
+                age: _age,
+                gender: _gender,
+                studyPath: _studyPath
+            };  
+            
+            studiHomoAssoc[matrikel] = studi;
+            _response.write("Daten empfangen");
         }
     
-        function refresh(): void {
-            console.log("refresh");
-        }
+        function refresh(_response: Http.ServerResponse): void {
+            
+            console.log(studiHomoAssoc);
+            
+            for (let matrikel in studiHomoAssoc) {  
+            let studi: Studi = studiHomoAssoc[matrikel];
+            let line: string = matrikel + ": ";
+            line += studi.studyPath + ", " + studi.name + ", " + studi.firstname + ", " + studi.age + " Jahre ";
+            line += studi.gender ? "male" : "female"; 
+            _response.write(line + "\n");                                          
+            }
+        } 
     
-        function search(_matrikel: string, _response: Http.ServerResponse): void {
-            if (studis[_matrikel])
-                _response.write(studis[_matrikel]);
-            else
-                _response.write("Kein Suchergebnis");
-        }
+        function search(query: Object, _response: Http.ServerResponse): void {
+            
+            let studi: Studi = studiHomoAssoc[query["searchFor"]];
+            if (studi) {
+                let line: string = query["searchFor"] + ": ";
+                line += studi.studyPath + ", " + studi.name + ", " + studi.firstname + ", " + studi.age + " Jahre ";
+                line += studi.gender ? "male" : "female";
+                _response.write(line);
+            } else {
+                _response.write("No search result");    
+            }    
+}
         
         function error(): void {
-            alert("Bitte überprüfen Sie Ihre Eingabe nochmals");
+            alert("Error");
         }
 }
