@@ -86,7 +86,7 @@ var Server;
             // for-in-Schleife iteriert �ber die Schl�ssel des assoziativen Arrays
             let studi = studiHomoAssoc[matrikel];
             let line = matrikel + ": ";
-            line += studi.studyPath + ", " + studi.name + ", " + studi.firstname + ", " + studi.age;
+            line += studi.studyPath + ", " + studi.name + ", " + studi.firstname + ", " + studi.age + ", ";
             line += studi.gender ? "male" : "female";
             _response.write(line + "\n");
         }
@@ -95,7 +95,7 @@ var Server;
         let studi = studiHomoAssoc[query["searchFor"]];
         if (studi) {
             let line = query["searchFor"] + ": ";
-            line += studi.studyPath + ", " + studi.name + ", " + studi.firstname + ", " + studi.age;
+            line += studi.studyPath + ", " + studi.name + ", " + studi.firstname + ", " + studi.age + ", ";
             line += studi.gender ? "male" : "female";
             _response.write(line);
         }
