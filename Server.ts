@@ -63,7 +63,7 @@ namespace Server {
 
     function handleRequest(_request: Http.IncomingMessage, _response: Http.ServerResponse): void {
     // handleRequest hat automatisch zwei Parameter, ohne Rückgabewert
-        console.log("Ich höre Stimmen!");
+        // console.log("Ich höre Stimmen!");
         let query: Object = Url.parse(_request.url, true).query;
         console.log(query["order"]);
 
@@ -116,7 +116,7 @@ namespace Server {
             studiHomoAssoc[matrikel] = studi;
             // Datensatz im assoziativen Array unter der Matrikelnummer speichern
             
-            _response.write("Daten empfangen");
+            _response.write("Data received");
         }
     
         function refresh(_response: Http.ServerResponse): void {

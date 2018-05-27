@@ -38,7 +38,7 @@ var Server;
     server.listen(port);
     function handleRequest(_request, _response) {
         // handleRequest hat automatisch zwei Parameter, ohne R�ckgabewert
-        console.log("Ich h�re Stimmen!");
+        // console.log("Ich h�re Stimmen!");
         let query = Url.parse(_request.url, true).query;
         console.log(query["order"]);
         if (query["order"]) {
@@ -78,7 +78,7 @@ var Server;
         };
         studiHomoAssoc[matrikel] = studi;
         // Datensatz im assoziativen Array unter der Matrikelnummer speichern
-        _response.write("Daten empfangen");
+        _response.write("Data received");
     }
     function refresh(_response) {
         console.log(studiHomoAssoc);
