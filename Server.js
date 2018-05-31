@@ -28,14 +28,23 @@ var Server;
         // wenn der Port undefined ist, dann:  
         port = 8100;
     // soll port 8100 sein
-    let server = Http.createServer((_request, _response) => {
+    let server = Http.createServer();
+    server.addListener("listening", handleListen);
+    server.addListener("request", handleRequest);
+    server.listen(port);
+    function handleListen(_request, _response) {
+        _response.setHeader("content-type", "text/html; charset=utf-8");
+        _response.setHeader("Access-Control-Allow-Origin", "*");
+    }
+    /*let server: Http.Server = Http.createServer((_request: Http.IncomingMessage, _response: Http.ServerResponse) => {
         _response.setHeader("content-type", "text/html; charset=utf-8");
         _response.setHeader("Access-Control-Allow-Origin", "*");
     });
     // erzeugt Server-Objekt, mit dem weiter gearbeitet werden kann
+    
     server.addListener("request", handleRequest);
     // Server beibringen auf etwas zu h�ren
-    server.listen(port);
+    server.listen(port);*/
     function handleRequest(_request, _response) {
         // handleRequest hat automatisch zwei Parameter, ohne R�ckgabewert
         // console.log("Ich h�re Stimmen!");

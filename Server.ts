@@ -51,7 +51,17 @@ namespace Server {
         port = 8100;
         // soll port 8100 sein
     
-    let server: Http.Server = Http.createServer((_request: Http.IncomingMessage, _response: Http.ServerResponse) => {
+    let server: Http.Server = Http.createServer();
+    server.addListener("listening", handleListen);
+    server.addListener("request", handleRequest);
+    server.listen(port);
+
+    function handleListen(_request: Http.IncomingMessage, _response: Http.ServerResponse): void {
+        _response.setHeader("content-type", "text/html; charset=utf-8");
+        _response.setHeader("Access-Control-Allow-Origin", "*");
+    }
+    
+    /*let server: Http.Server = Http.createServer((_request: Http.IncomingMessage, _response: Http.ServerResponse) => {
         _response.setHeader("content-type", "text/html; charset=utf-8");
         _response.setHeader("Access-Control-Allow-Origin", "*");
     });
@@ -59,7 +69,7 @@ namespace Server {
     
     server.addListener("request", handleRequest);
     // Server beibringen auf etwas zu hören
-    server.listen(port);
+    server.listen(port);*/
 
     function handleRequest(_request: Http.IncomingMessage, _response: Http.ServerResponse): void {
     // handleRequest hat automatisch zwei Parameter, ohne Rückgabewert
