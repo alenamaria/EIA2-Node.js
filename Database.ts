@@ -1,7 +1,3 @@
-/**
- * Simple database insertion and query for MongoDB
- * @author: Jirka Dell'Oro-Friedl
- */
 import * as Mongo from "mongodb";
 console.log("Database starting");
 
@@ -13,8 +9,8 @@ let students: Mongo.Collection;
 // wenn wir auf heroku sind...
 if (process.env.NODE_ENV == "production") {
     //    databaseURL = "mongodb://username:password@hostname:port/database";
-    databaseURL = "mongodb://testuser:testpassword@ds129532.mlab.com:29532/eia2";
-    databaseName = "eia2";
+    databaseURL = "mongodb://testuser:testpassword12@ds141870.mlab.com:41870/database-mongodb";
+    databaseName = "database-mongodb";
 }
 
 // handleConnect wird aufgerufen wenn der Versuch, die Connection zur Datenbank herzustellen, erfolgte
@@ -31,7 +27,7 @@ function handleConnect(_e: Mongo.MongoError, _db: Mongo.Db): void {
     }
 }
 
-export function insert(_doc: StudentData): void {
+export function insert(_doc: Studi): void {
     students.insertOne(_doc, handleInsert);
 }
 
@@ -44,7 +40,7 @@ export function findAll(_callback: Function): void {
     var cursor: Mongo.Cursor = students.find();
     cursor.toArray(prepareAnswer);
 
-    function prepareAnswer(_e: Mongo.MongoError, studentArray: StudentData[]): void {
+    function prepareAnswer(_e: Mongo.MongoError, studentArray: Studi[]): void {
         if (_e)
             _callback("Error" + _e);
         else
