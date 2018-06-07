@@ -53,7 +53,7 @@ namespace Server {
     
     let server: Http.Server = Http.createServer();
     server.addListener("request", handleRequestSetHeaders);
-    server.addListener("request", handleRequest);
+    server.addListener("request", handleRequest); 
     server.listen(port);
 
     function handleRequestSetHeaders(_request: Http.IncomingMessage, _response: Http.ServerResponse): void {
