@@ -17,7 +17,7 @@ if (port == undefined)
 let server = Http.createServer();
 server.addListener("request", handleRequest);
 server.listen(port);
-function respond(_response, _text) {
+function handleResponse(_response, _text) {
     _response.setHeader("content-type", "text/html; charset=utf-8");
     _response.setHeader("Access-Control-Allow-Origin", "*");
     _response.write(_text);
@@ -61,19 +61,16 @@ function insert(query, _response) {
         studyPath: _studyPath
     };
     Database.insert(studi);
-    respond(_response, "Daten wurden gespeichert");
+    handleResponse(_response, "Daten wurden gespeichert");
 }
 function refresh(_response) {
     Database.findAll(function (json) {
-        respond(_response, json);
+        handleResponse(_response, json);
     });
 }
-/*function search(query: AssocStringString, _response: Http.ServerResponse): void {
-    let searchedMatrikel: number = parseInt(query["searchedFor"]);
-    Database.findStudent(searchedMatrikel, function(json: string): void {
-        respond(_response, json);
-    });
-}*/
+function search(query, _response) {
+    // noch nicht umgeschrieben
+}
 function error() {
     alert("Error");
 }

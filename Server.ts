@@ -19,7 +19,7 @@ let server: Http.Server = Http.createServer();
 server.addListener("request", handleRequest);
 server.listen(port);
 
-function respond(_response: Http.ServerResponse, _text: string): void {
+function handleResponse(_response: Http.ServerResponse, _text: string): void {
     _response.setHeader("content-type", "text/html; charset=utf-8");
     _response.setHeader("Access-Control-Allow-Origin", "*");
     _response.write(_text);
@@ -69,21 +69,18 @@ function insert(query: AssocStringString, _response: Http.ServerResponse): void 
         studyPath: _studyPath
     };
     Database.insert(studi);
-    respond(_response, "Daten wurden gespeichert");
+    handleResponse(_response, "Daten wurden gespeichert");
 }
 
 function refresh(_response: Http.ServerResponse): void {
     Database.findAll(function(json: string): void {
-        respond(_response, json);
+        handleResponse(_response, json);
     });
 }
 
-/*function search(query: AssocStringString, _response: Http.ServerResponse): void {
-    let searchedMatrikel: number = parseInt(query["searchedFor"]);
-    Database.findStudent(searchedMatrikel, function(json: string): void {
-        respond(_response, json);
-    });
-}*/
+function search(query: Object, _response: Http.ServerResponse): void {
+// noch nicht umgeschrieben
+}
 
 function error(): void {
     alert("Error");
