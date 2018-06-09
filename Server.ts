@@ -18,22 +18,16 @@ if (port == undefined)
     port = 8100;
 
 let server: Http.Server = Http.createServer();
-server.addListener("request", handleRequestSetHeader);
+//server.addListener("request", handleRequestSetHeader);
 server.addListener("request", handleRequest);
 server.listen(port);
 
-function handleRequestSetHeader(_request: Http.IncomingMessage, _response: Http.ServerResponse): void {
+function respond(_response: Http.ServerResponse, _text: string): void {
     _response.setHeader("content-type", "text/html; charset=utf-8");
     _response.setHeader("Access-Control-Allow-Origin", "*");
+    _response.write(_text);
+    _response.end();
 }
-
-/*let server: Http.Server = Http.createServer((_request: Http.IncomingMessage, _response: Http.ServerResponse) => {
-    //=> Arrow function (Kurzschreibweise für eine Funktion)  
-    _response.setHeader("content-type", "text/html; charset=utf-8");
-    _response.setHeader("Access-Control-Allow-Origin", "*");
-});
-server.addListener("request", handleRequest);
-server.listen(port);*/
 
 //Switch Abfrage mit den verschiednene Fällen und den entsprechenden Funktionen, die ausgeführt werden sollen      
 function handleRequest(_request: Http.IncomingMessage, _response: Http.ServerResponse): void {
@@ -79,13 +73,13 @@ function insert(query: AssocStringString, _response: Http.ServerResponse): void 
         studyPath: _studyPath
     };
     Database.insert(studi);
-    _response.write("Daten wurden gespeichert"); //Rückmeldung für den User
+    respond(_response, "Daten wurden gespeichert"); //Rückmeldung für den User
 }
 
 function refresh(_response: Http.ServerResponse): void {
     //console.log(studiHomoAssoc);
     Database.findAll(function(json: string): void {
-    _response.write(json);
+    respond(_response, json);
     });
 }
 
