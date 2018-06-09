@@ -18,11 +18,11 @@ if (port == undefined)
     port = 8100;
 
 let server: Http.Server = Http.createServer();
-server.addListener("request", respond);
+server.addListener("request", handleResponse);
 server.addListener("request", handleRequest);
 server.listen(port);
 
-function respond(_response: Http.ServerResponse, _text: string): void {
+function handleResponse(_response: Http.ServerResponse, _text: string): void {
     _response.setHeader("content-type", "text/html; charset=utf-8");
     _response.setHeader("Access-Control-Allow-Origin", "*");
     _response.write(_text);
@@ -73,13 +73,13 @@ function insert(query: AssocStringString, _response: Http.ServerResponse): void 
         studyPath: _studyPath
     };
     Database.insert(studi);
-    respond(_response, "Daten wurden gespeichert"); //Rückmeldung für den User
+    handleResponse(_response, "Daten wurden gespeichert"); //Rückmeldung für den User
 }
 
 function refresh(_response: Http.ServerResponse): void {
     //console.log(studiHomoAssoc);
     Database.findAll(function(json: string): void {
-    respond(_response, json);
+    handleResponse(_response, json);
     });
 }
 
