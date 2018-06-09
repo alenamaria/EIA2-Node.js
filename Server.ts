@@ -18,7 +18,6 @@ if (port == undefined)
     port = 8100;
 
 let server: Http.Server = Http.createServer();
-server.addListener("request", handleResponse);
 server.addListener("request", handleRequest);
 server.listen(port);
 

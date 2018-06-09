@@ -15,7 +15,6 @@ let port = process.env.PORT;
 if (port == undefined)
     port = 8100;
 let server = Http.createServer();
-server.addListener("request", handleResponse);
 server.addListener("request", handleRequest);
 server.listen(port);
 function handleResponse(_response, _text) {
