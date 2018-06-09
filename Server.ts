@@ -84,13 +84,9 @@ function insert(query: AssocStringString, _response: Http.ServerResponse): void 
 
 function refresh(_response: Http.ServerResponse): void {
     //console.log(studiHomoAssoc);
-    for (let matrikel in studiHomoAssoc) {
-        let studi: Studi = studiHomoAssoc[matrikel];
-        let line: string = matrikel + ": ";
-        line += studi.studyPath + ", " + studi.name + ", " + studi.firstname + ", " + studi.age + " Jahre ";
-        line += studi.gender ? "(M)" : "(F)";
-        _response.write(line + "\n");
-    }
+    Database.findAll(function(json: string): void {
+    _response.write(_response, json);
+    });
 }
 
 function search(query: AssocStringString, _response: Http.ServerResponse): void {

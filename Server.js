@@ -73,13 +73,9 @@ function insert(query, _response) {
 }
 function refresh(_response) {
     //console.log(studiHomoAssoc);
-    for (let matrikel in studiHomoAssoc) {
-        let studi = studiHomoAssoc[matrikel];
-        let line = matrikel + ": ";
-        line += studi.studyPath + ", " + studi.name + ", " + studi.firstname + ", " + studi.age + " Jahre ";
-        line += studi.gender ? "(M)" : "(F)";
-        _response.write(line + "\n");
-    }
+    Database.findAll(function (json) {
+        _response.write(_response, json);
+    });
 }
 function search(query, _response) {
     let studi = studiHomoAssoc[query["searchFor"]];
