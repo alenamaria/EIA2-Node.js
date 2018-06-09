@@ -85,7 +85,7 @@ function insert(query: AssocStringString, _response: Http.ServerResponse): void 
 function refresh(_response: Http.ServerResponse): void {
     //console.log(studiHomoAssoc);
     Database.findAll(function(json: string): void {
-    _response.write(_response, json);
+    _response.write(json);
     });
 }
 

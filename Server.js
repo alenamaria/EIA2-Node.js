@@ -74,7 +74,7 @@ function insert(query, _response) {
 function refresh(_response) {
     //console.log(studiHomoAssoc);
     Database.findAll(function (json) {
-        _response.write(_response, json);
+        _response.write(json);
     });
 }
 function search(query, _response) {
