@@ -64,10 +64,10 @@ function refresh(_response) {
     });
 }
 function search(query, _response) {
-    /*let matrikelSearch: number = parseInt(query["searchFor"]);
-    Database.findStudent(matrikelSearch, function(json: string): void {
+    let matrikelSearch = parseInt(query["searchFor"]);
+    Database.findStudent(matrikelSearch, function (json) {
         handleResponse(_response, json);
-    });*/
+    });
 }
 function error() {
     alert("Error");
