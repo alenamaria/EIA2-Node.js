@@ -1,6 +1,16 @@
+/*  Aufgabe: Aufgabe 8: ClientServer - StudiVZ
+    Name: Alena Hurst
+    Matrikel: 257742
+    Datum: 10.06.18
+    
+    Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe. Er wurde nicht kopiert und auch nicht diktiert.
+    Dieser Code wurde zusammen mit Franziska Heiﬂ, Sofia Gschwend, Sabrina Kerl, Anna Lotz und Tim Lieberherr erarbeitet*/ 
+
 import * as Mongo from "mongodb";
 console.log("Database starting");
 
+   
+    
 let databaseURL: string = "mongodb://localhost:27017";
 let databaseName: string = "Test";
 let db: Mongo.Db;
@@ -43,21 +53,20 @@ export function findAll(_callback: Function): void {
     function prepareAnswer(_e: Mongo.MongoError, studentArray: Studi[]): void {
         if (_e) {
             _callback("Error" + _e);
-        }
-        else {
+        } else {
             let line: string = "";
             for (let i: number = 0; i < studentArray.length; i++) {
-                line += studentArray[i].matrikel + ": " + studentArray[i].studyPath + ", " + studentArray[i].name + ", " + studentArray[i].firstname + ", " + studentArray[i].age + ", ";
+                line += studentArray[i].matrikel + ": " + studentArray[i].studyPath + ", " + studentArray[i].firstname + ", " + studentArray[i].name + ", " + studentArray[i].age + ", ";
                 line += studentArray[i].gender ? "male" : "female";
                 line += "\n";
             }
             _callback(line);
-        }
-    } 
+        } 
+    }
 }
 
-export function findStudent(matrikelSearch: number, _callback: Function): void {
-    var myCursor: Mongo.Cursor = students.find({ "matrikel": matrikelSearch }).limit(1);
+export function findStudent(searchedMatrikel: number, _callback: Function): void {
+    var myCursor: Mongo.Cursor = students.find({ "matrikel": searchedMatrikel }).limit(1);
     myCursor.next(prepareStudent);
 
     function prepareStudent(_e: Mongo.MongoError, studi: Studi): void {
@@ -66,7 +75,7 @@ export function findStudent(matrikelSearch: number, _callback: Function): void {
         }
 
         if (studi) {
-            let line: string = studi.matrikel + ": " + studi.studyPath + ", " + studi.name + ", " + studi.firstname + ", " + studi.age + ", ";
+            let line: string = studi.matrikel + ": " + studi.studyPath + ", " + studi.firstname + ", " + studi.name + ", " + studi.age + ", ";
             line += studi.gender ? "male" : "female";
             _callback(line);
         } else {

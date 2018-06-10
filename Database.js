@@ -1,3 +1,10 @@
+/*  Aufgabe: Aufgabe 8: ClientServer - StudiVZ
+    Name: Alena Hurst
+    Matrikel: 257742
+    Datum: 10.06.18
+    
+    Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe. Er wurde nicht kopiert und auch nicht diktiert.
+    Dieser Code wurde zusammen mit Franziska Hei�, Sofia Gschwend, Sabrina Kerl, Anna Lotz und Tim Lieberherr erarbeitet*/
 "use strict";
 const Mongo = require("mongodb");
 console.log("Database starting");
@@ -39,7 +46,7 @@ function findAll(_callback) {
         else {
             let line = "";
             for (let i = 0; i < studentArray.length; i++) {
-                line += studentArray[i].matrikel + ": " + studentArray[i].studyPath + ", " + studentArray[i].name + ", " + studentArray[i].firstname + ", " + studentArray[i].age + ", ";
+                line += studentArray[i].matrikel + ": " + studentArray[i].studyPath + ", " + studentArray[i].firstname + ", " + studentArray[i].name + ", " + studentArray[i].age + ", ";
                 line += studentArray[i].gender ? "male" : "female";
                 line += "\n";
             }
@@ -48,15 +55,15 @@ function findAll(_callback) {
     }
 }
 exports.findAll = findAll;
-function findStudent(matrikelSearch, _callback) {
-    var myCursor = students.find({ "matrikel": matrikelSearch }).limit(1);
+function findStudent(searchedMatrikel, _callback) {
+    var myCursor = students.find({ "matrikel": searchedMatrikel }).limit(1);
     myCursor.next(prepareStudent);
     function prepareStudent(_e, studi) {
         if (_e) {
             _callback("Error" + _e);
         }
         if (studi) {
-            let line = studi.matrikel + ": " + studi.studyPath + ", " + studi.name + ", " + studi.firstname + ", " + studi.age + ", ";
+            let line = studi.matrikel + ": " + studi.studyPath + ", " + studi.firstname + ", " + studi.name + ", " + studi.age + ", ";
             line += studi.gender ? "male" : "female";
             _callback(line);
         }

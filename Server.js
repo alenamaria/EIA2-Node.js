@@ -1,24 +1,22 @@
-/*
-Aufgabe: Aufgabe 6
-Name: Alena Hurst
-Matrikel: 257742
-Datum: 27.05.18
+/*  Aufgabe: Aufgabe 8: ClientServer - StudiVZ
+    Name: Alena Hurst
+    Matrikel: 257742
+    Datum: 10.06.18
     
-Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe.
-Er wurde nicht kopiert und auch nicht diktiert.
-*/
+    Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe. Er wurde nicht kopiert und auch nicht diktiert.
+    Dieser Code wurde zusammen mit Franziska Hei�, Sofia Gschwend, Sabrina Kerl, Anna Lotz und Tim Lieberherr erarbeitet*/
 "use strict";
 const Http = require("http");
 const Url = require("url");
 const Database = require("./Database");
 let port = process.env.PORT;
 if (port == undefined)
-    port = 8200;
+    port = 8100;
 let server = Http.createServer();
 server.addListener("request", handleRequest);
 server.listen(port);
+//Switch Abfrage mit den verschiednene F�llen und den entsprechenden Funktionen, die ausgef�hrt werden sollen      
 function handleRequest(_request, _response) {
-    console.log("Ich h�re Stimmen!");
     let query = Url.parse(_request.url, true).query;
     console.log(query["command"]);
     if (query["command"]) {
@@ -36,27 +34,28 @@ function handleRequest(_request, _response) {
                 error();
         }
     }
-    _response.end();
+    //_response.end();
 }
+//Daten des Studi werden als Objekte �bergeben      
 function insert(query, _response) {
     let obj = JSON.parse(query["data"]);
-    let _name = obj.name;
     let _firstname = obj.firstname;
+    let _name = obj.name;
     let matrikel = obj.matrikel.toString();
     let _age = obj.age;
     let _gender = obj.gender;
     let _studyPath = obj.studyPath;
     let studi;
     studi = {
-        name: _name,
         firstname: _firstname,
+        name: _name,
         matrikel: parseInt(matrikel),
         age: _age,
         gender: _gender,
         studyPath: _studyPath
     };
     Database.insert(studi);
-    handleResponse(_response, "Data received");
+    handleResponse(_response, "Daten wurden gespeichert"); //R�ckmeldung f�r den User
 }
 function refresh(_response) {
     Database.findAll(function (json) {
@@ -64,8 +63,8 @@ function refresh(_response) {
     });
 }
 function search(query, _response) {
-    let matrikelSearch = parseInt(query["searchFor"]);
-    Database.findStudent(matrikelSearch, function (json) {
+    let searchedMatrikel = parseInt(query["searchFor"]);
+    Database.findStudent(searchedMatrikel, function (json) {
         handleResponse(_response, json);
     });
 }
