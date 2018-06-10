@@ -40,4 +40,22 @@ function findAll(_callback) {
     }
 }
 exports.findAll = findAll;
+function findStudent(matrikelSearch, _callback) {
+    var myCursor = students.find({ "matrikel": matrikelSearch }).limit(1);
+    myCursor.next(prepareStudent);
+    function prepareStudent(_e, studi) {
+        if (_e) {
+            _callback("Error" + _e);
+        }
+        if (studi) {
+            let line = studi.matrikel + ": " + studi.studyPath + ", " + studi.name + ", " + studi.firstname + ", " + studi.age + ", ";
+            line += studi.gender ? "m�nnlich" : "weiblich";
+            _callback(line);
+        }
+        else {
+            _callback("No Match");
+        }
+    }
+}
+exports.findStudent = findStudent;
 //# sourceMappingURL=Database.js.map

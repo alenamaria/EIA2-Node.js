@@ -36,12 +36,13 @@ function handleRequest(_request, _response) {
                 refresh(_response);
                 break;
             case "search":
-                //search(query, _response);
+                search(query, _response);
                 break;
             default:
                 error();
         }
     }
+    _response.end();
 }
 function insert(query, _response) {
     let obj = JSON.parse(query["data"]);
@@ -67,9 +68,20 @@ function refresh(_response) {
     Database.findAll(function (json) {
         handleResponse(_response, json);
     });
+    for (let matrikel in studiHomoAssoc) {
+        // for-in-Schleife iteriert �ber die Schl�ssel des assoziativen Arrays
+        let studi = studiHomoAssoc[matrikel];
+        let line = matrikel + ": ";
+        line += studi.studyPath + ", " + studi.name + ", " + studi.firstname + ", " + studi.age + ", ";
+        line += studi.gender ? "male" : "female";
+        _response.write(line + "\n");
+    }
 }
 function search(query, _response) {
-    // noch nicht umgeschrieben
+    let matrikelSearch = parseInt(query["searchFor"]);
+    Database.findStudent(matrikelSearch, function (json) {
+        handleResponse(_response, json);
+    });
 }
 function error() {
     alert("Error");

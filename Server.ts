@@ -42,13 +42,14 @@ function handleRequest(_request: Http.IncomingMessage, _response: Http.ServerRes
                 break;
 
             case "search":
-                //search(query, _response);
+                search(query, _response);
                 break;
 
             default:
                 error();
         }
     }
+    _response.end();
 }
 
 function insert(query: AssocStringString, _response: Http.ServerResponse): void {
@@ -76,10 +77,22 @@ function refresh(_response: Http.ServerResponse): void {
     Database.findAll(function(json: string): void {
         handleResponse(_response, json);
     });
-}
+    
+    for (let matrikel in studiHomoAssoc) {
+            // for-in-Schleife iteriert über die Schlüssel des assoziativen Arrays
+            let studi: Studi = studiHomoAssoc[matrikel];
+            let line: string = matrikel + ": ";
+            line += studi.studyPath + ", " + studi.name + ", " + studi.firstname + ", " + studi.age + ", ";
+            line += studi.gender ? "male" : "female"; 
+            _response.write(line + "\n");
+    }
+} 
 
-function search(query: Object, _response: Http.ServerResponse): void {
-// noch nicht umgeschrieben
+function search(query: AssocStringString, _response: Http.ServerResponse): void {
+    let matrikelSearch: number = parseInt(query["searchFor"]);
+        Database.findStudent(matrikelSearch, function (json: string): void {
+        handleResponse(_response, json);    
+});
 }
 
 function error(): void {

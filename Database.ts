@@ -47,3 +47,22 @@ export function findAll(_callback: Function): void {
             _callback(JSON.stringify(studentArray));
     }
 }
+
+export function findStudent(matrikelSearch: number, _callback: Function): void {
+    var myCursor: Mongo.Cursor = students.find({ "matrikel": matrikelSearch }).limit(1);
+    myCursor.next(prepareStudent);
+
+    function prepareStudent(_e: Mongo.MongoError, studi: Studi): void {
+        if (_e) {
+            _callback("Error" + _e);
+        }
+
+        if (studi) {
+            let line: string = studi.matrikel + ": " + studi.studyPath + ", " + studi.name + ", " + studi.firstname + ", " + studi.age + ", ";
+            line += studi.gender ? "männlich" : "weiblich";
+            _callback(line);
+        } else {
+            _callback("No Match");
+        }
+}
+}
