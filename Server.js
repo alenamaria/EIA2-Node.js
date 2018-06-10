@@ -62,20 +62,12 @@ function insert(query, _response) {
         studyPath: _studyPath
     };
     Database.insert(studi);
-    handleResponse(_response, "Daten wurden gespeichert");
+    handleResponse(_response, "Data received");
 }
 function refresh(_response) {
     Database.findAll(function (json) {
         handleResponse(_response, json);
     });
-    for (let matrikel in studiHomoAssoc) {
-        // for-in-Schleife iteriert �ber die Schl�ssel des assoziativen Arrays
-        let studi = studiHomoAssoc[matrikel];
-        let line = matrikel + ": ";
-        line += studi.studyPath + ", " + studi.name + ", " + studi.firstname + ", " + studi.age + ", ";
-        line += studi.gender ? "male" : "female";
-        _response.write(line + "\n");
-    }
 }
 function search(query, _response) {
     let matrikelSearch = parseInt(query["searchFor"]);

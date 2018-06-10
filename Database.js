@@ -33,10 +33,18 @@ function findAll(_callback) {
     var cursor = students.find();
     cursor.toArray(prepareAnswer);
     function prepareAnswer(_e, studentArray) {
-        if (_e)
+        if (_e) {
             _callback("Error" + _e);
-        else
+        }
+        else {
+            let line = "";
+            for (let i = 0; i < studentArray.length; i++) {
+                line += studentArray[i].matrikel + ": " + studentArray[i].studyPath + ", " + studentArray[i].name + ", " + studentArray[i].firstname + ", " + studentArray[i].age + ", ";
+                line += studentArray[i].gender ? "male" : "female";
+                line += "\n";
+            }
             _callback(JSON.stringify(studentArray));
+        }
     }
 }
 exports.findAll = findAll;
@@ -49,7 +57,7 @@ function findStudent(matrikelSearch, _callback) {
         }
         if (studi) {
             let line = studi.matrikel + ": " + studi.studyPath + ", " + studi.name + ", " + studi.firstname + ", " + studi.age + ", ";
-            line += studi.gender ? "m�nnlich" : "weiblich";
+            line += studi.gender ? "male" : "female";
             _callback(line);
         }
         else {

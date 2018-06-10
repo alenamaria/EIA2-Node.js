@@ -70,22 +70,13 @@ function insert(query: AssocStringString, _response: Http.ServerResponse): void 
         studyPath: _studyPath
     };
     Database.insert(studi);
-    handleResponse(_response, "Daten wurden gespeichert");
+    handleResponse(_response, "Data received");
 }
 
 function refresh(_response: Http.ServerResponse): void {
     Database.findAll(function(json: string): void {
         handleResponse(_response, json);
     });
-    
-    for (let matrikel in studiHomoAssoc) {
-            // for-in-Schleife iteriert über die Schlüssel des assoziativen Arrays
-            let studi: Studi = studiHomoAssoc[matrikel];
-            let line: string = matrikel + ": ";
-            line += studi.studyPath + ", " + studi.name + ", " + studi.firstname + ", " + studi.age + ", ";
-            line += studi.gender ? "male" : "female"; 
-            _response.write(line + "\n");
-    }
 } 
 
 function search(query: AssocStringString, _response: Http.ServerResponse): void {

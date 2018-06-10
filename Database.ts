@@ -41,10 +41,18 @@ export function findAll(_callback: Function): void {
     cursor.toArray(prepareAnswer);
 
     function prepareAnswer(_e: Mongo.MongoError, studentArray: Studi[]): void {
-        if (_e)
+        if (_e) {
             _callback("Error" + _e);
-        else
+        }
+        else {
+            let line: string = "";
+            for (let i: number = 0; i < studentArray.length; i++) {
+                line += studentArray[i].matrikel + ": " + studentArray[i].studyPath + ", " + studentArray[i].name + ", " + studentArray[i].firstname + ", " + studentArray[i].age + ", ";
+                line += studentArray[i].gender ? "male" : "female";
+                line += "\n";
+            }
             _callback(JSON.stringify(studentArray));
+        }
     }
 }
 
@@ -59,10 +67,10 @@ export function findStudent(matrikelSearch: number, _callback: Function): void {
 
         if (studi) {
             let line: string = studi.matrikel + ": " + studi.studyPath + ", " + studi.name + ", " + studi.firstname + ", " + studi.age + ", ";
-            line += studi.gender ? "männlich" : "weiblich";
+            line += studi.gender ? "male" : "female";
             _callback(line);
         } else {
             _callback("No Match");
         }
-}
+    }
 }
