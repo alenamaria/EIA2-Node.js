@@ -73,10 +73,10 @@ function refresh(_response: Http.ServerResponse): void {
 }
 
 function search(query: AssocStringString, _response: Http.ServerResponse): void {
-    let matrikelSearch: number = parseInt(query["searchFor"]);
+    /*let matrikelSearch: number = parseInt(query["searchFor"]);
     Database.findStudent(matrikelSearch, function(json: string): void {
         handleResponse(_response, json);
-    });
+    });*/
 }
 
 function error(): void {
