@@ -36,16 +36,10 @@ function findAll(_callback) {
         if (_e) {
             _callback("Error" + _e);
         }
-        else {
-            let line = "";
-            for (let i = 0; i < studentArray.length; i++) {
-                line += studentArray[i].matrikel + ": " + studentArray[i].studyPath + ", " + studentArray[i].name + ", " + studentArray[i].firstname + ", " + studentArray[i].age + ", ";
-                line += studentArray[i].gender ? "male" : "female";
-                line += "\n";
-            }
+        else
             _callback(JSON.stringify(studentArray));
-        }
     }
+    /* } */
 }
 exports.findAll = findAll;
 function findStudent(matrikelSearch, _callback) {
