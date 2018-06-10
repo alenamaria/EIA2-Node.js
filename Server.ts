@@ -64,7 +64,7 @@ function insert(query: AssocStringString, _response: Http.ServerResponse): void 
     };
 
     Database.insert(studi);
-    handleResponse(_response, "Daten wurden gespeichert"); //Rückmeldung für den User
+    handleResponse(_response, "Data received"); //Rückmeldung für den User
 }
 
 function refresh(_response: Http.ServerResponse): void {

@@ -55,7 +55,7 @@ function insert(query, _response) {
         studyPath: _studyPath
     };
     Database.insert(studi);
-    handleResponse(_response, "Daten wurden gespeichert"); //R�ckmeldung f�r den User
+    handleResponse(_response, "Data received"); //R�ckmeldung f�r den User
 }
 function refresh(_response) {
     Database.findAll(function (json) {
