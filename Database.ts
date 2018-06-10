@@ -44,16 +44,16 @@ export function findAll(_callback: Function): void {
         if (_e) {
             _callback("Error" + _e);
         }
-        else /*{
+        else {
             let line: string = "";
             for (let i: number = 0; i < studentArray.length; i++) {
                 line += studentArray[i].matrikel + ": " + studentArray[i].studyPath + ", " + studentArray[i].name + ", " + studentArray[i].firstname + ", " + studentArray[i].age + ", ";
                 line += studentArray[i].gender ? "male" : "female";
                 line += "\n";
-            }*/
-            _callback(JSON.stringify(studentArray));
+            }
+            _callback(line);
         }
-    /* } */
+    } 
 }
 
 export function findStudent(matrikelSearch: number, _callback: Function): void {
