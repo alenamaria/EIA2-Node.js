@@ -77,13 +77,13 @@ function refresh(_response: Http.ServerResponse): void {
     Database.findAll(function(json: string): void {
         handleResponse(_response, json);
     });
-} 
+}
 
 function search(query: AssocStringString, _response: Http.ServerResponse): void {
     let matrikelSearch: number = parseInt(query["searchFor"]);
-        Database.findStudent(matrikelSearch, function (json: string): void {
-        handleResponse(_response, json);    
-});
+    Database.findStudent(matrikelSearch, function(json: string): void {
+        handleResponse(_response, json);
+    });
 }
 
 function error(): void {
